@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://boei4coxl4qce"]
+
+[ext_resource type="PackedScene" uid="uid://cn2n7vovejfuh" path="res://scenes/player.tscn" id="1_jbqir"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yautc"]
+size = Vector2(151, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fr1um"]
+size = Vector2(8, 93)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="TopWall" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="ColorRect" type="ColorRect" parent="TopWall"]
+offset_right = 151.0
+offset_bottom = 6.0
+color = Color(0.11858138, 0.11858138, 0.11858138, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(75.5, 3)
+shape = SubResource("RectangleShape2D_yautc")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 87)
+collision_mask = 2
+
+[node name="ColorRect" type="ColorRect" parent="BottomWall"]
+offset_right = 151.0
+offset_bottom = 6.0
+color = Color(0.11858138, 0.11858138, 0.11858138, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(75.5, 3)
+shape = SubResource("RectangleShape2D_yautc")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="ColorRect" type="ColorRect" parent="LeftWall"]
+offset_left = -8.0
+offset_bottom = 93.0
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(-4, 46.5)
+shape = SubResource("RectangleShape2D_fr1um")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(159, 0)
+collision_mask = 2
+
+[node name="ColorRect" type="ColorRect" parent="RightWall"]
+offset_left = -8.0
+offset_bottom = 93.0
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(-4, 46.5)
+shape = SubResource("RectangleShape2D_fr1um")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_top = 5.0
+offset_right = 151.0
+offset_bottom = 88.0
+color = Color(0.5449743, 0.54497427, 0.54497427, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_jbqir")]
+position = Vector2(74, 49)
