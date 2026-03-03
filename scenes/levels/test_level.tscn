@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://boei4coxl4qce"]
+[gd_scene load_steps=5 format=3 uid="uid://boei4coxl4qce"]
 
 [ext_resource type="PackedScene" uid="uid://cn2n7vovejfuh" path="res://scenes/player.tscn" id="1_jbqir"]
 
@@ -7,6 +7,9 @@ size = Vector2(151, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fr1um"]
 size = Vector2(8, 93)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jbqir"]
+absorbent = true
 
 [node name="TestLevel" type="Node2D"]
 
@@ -51,6 +54,7 @@ shape = SubResource("RectangleShape2D_fr1um")
 [node name="RightWall" type="StaticBody2D" parent="."]
 position = Vector2(159, 0)
 collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_jbqir")
 
 [node name="ColorRect" type="ColorRect" parent="RightWall"]
 offset_left = -8.0
