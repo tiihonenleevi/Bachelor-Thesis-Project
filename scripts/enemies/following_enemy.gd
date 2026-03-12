@@ -5,3 +5,6 @@ extends CharacterBody2D
 
 func _ready() -> void:
 	state_machine.init(self, animations)
+
+func _physics_process(_delta: float) -> void:
+	move_and_slide()

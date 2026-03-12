@@ -15,9 +15,17 @@ run/main_scene="uid://boei4coxl4qce"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalManager="*res://scripts/singletons/signal_manager.gd"
+
 [debug]
 
 gdscript/warnings/unused_signal=0
+
+[global_group]
+
+Player=""
 
 [input]
 

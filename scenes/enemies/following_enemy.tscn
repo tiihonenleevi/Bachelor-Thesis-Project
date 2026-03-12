@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bh2y1ijvkbc20"]
+[gd_scene load_steps=9 format=3 uid="uid://bh2y1ijvkbc20"]
 
 [ext_resource type="Texture2D" uid="uid://dm5iqepxrnqqp" path="res://icon.svg" id="1_0eo00"]
 [ext_resource type="Script" uid="uid://cd118fdk6fxn3" path="res://scripts/enemies/following_enemy.gd" id="1_h52yg"]
 [ext_resource type="Script" uid="uid://ww714qnvrr8c" path="res://scripts/state_machine.gd" id="3_aejsi"]
 [ext_resource type="Script" uid="uid://dlvtkij5ndgoa" path="res://scripts/enemies/enemy_states/wander.gd" id="4_aejsi"]
+[ext_resource type="Script" uid="uid://v3mrip6avj60" path="res://scripts/enemies/enemy_states/chase.gd" id="5_en65j"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqtkf"]
-size = Vector2(35, 20)
+[sub_resource type="CircleShape2D" id="CircleShape2D_en65j"]
+radius = 66.1211
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aejsi"]
 animations = [{
@@ -20,18 +21,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0eo00"]
-size = Vector2(32, 32)
+size = Vector2(32, 29)
 
 [node name="FollowingEnemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_h52yg")
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-shape = SubResource("RectangleShape2D_gqtkf")
-target_position = Vector2(0, 100)
-max_results = 1
+[node name="DetectArea" type="Area2D" parent="."]
 collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+z_index = 3
+shape = SubResource("CircleShape2D_en65j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-9.536743e-07, -1.999999)
@@ -39,7 +41,7 @@ scale = Vector2(0.24999999, 0.23437501)
 sprite_frames = SubResource("SpriteFrames_aejsi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_0eo00")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
@@ -48,3 +50,15 @@ current_state = NodePath("Wander")
 
 [node name="Wander" type="Node" parent="StateMachine"]
 script = ExtResource("4_aejsi")
+
+[node name="KeepGoingTimer" type="Timer" parent="StateMachine/Wander"]
+wait_time = 2.0
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("5_en65j")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 29)
+
+[connection signal="body_entered" from="DetectArea" to="StateMachine/Wander" method="_on_detect_area_body_entered"]
+[connection signal="timeout" from="StateMachine/Wander/KeepGoingTimer" to="StateMachine/Wander" method="_on_keep_going_timer_timeout"]
