@@ -11,7 +11,6 @@ func init(parent: CharacterBody2D, animations: AnimatedSprite2D) -> void:
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
-			child.animation_name = child.name
 			child.parent = parent
 			child.animations = animations
 			
@@ -37,3 +36,9 @@ func on_state_changed(new_state_name: StringName) -> void:
 		current_state = new_state
 	else:
 		push_warning(new_state_name + "isn't a State")
+
+func _process(delta: float) -> void:
+	current_state.update(delta)
+
+func _physics_process(delta: float) -> void:
+	current_state.physics_update(delta)

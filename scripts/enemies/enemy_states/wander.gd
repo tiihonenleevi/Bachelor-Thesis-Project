@@ -9,30 +9,35 @@ const SPEED: int = 50
 var direction: String = DIRECTIONS.pick_random()
 
 func enter() -> void:
+	print("wander")
 	# Calls the State's implementation of enter()
 	# super()
 	keep_going_timer.start()
 
-func _physics_process(_delta: float) -> void:
-	
+func physics_update(_delta: float) -> void:
 	if ray_cast.is_colliding():
 		direction = DIRECTIONS.pick_random()
 	
 	match direction:
 		"LEFT":
+			ray_cast.target_position = Vector2(-29, 0)
 			parent.velocity.x = -SPEED
 		"RIGHT":
+			ray_cast.target_position = Vector2(29, 0)
 			parent.velocity.x = SPEED
 		"UP":
+			ray_cast.target_position = Vector2(0, -29)
 			parent.velocity.y = -SPEED
 		"DOWN":
+			ray_cast.target_position = Vector2(0, 29)
 			parent.velocity.y = SPEED
 
 func _on_detect_area_body_entered(body: Node2D) -> void:
 	# Check if player is on site
 	if body.is_in_group("Player"):
-		SignalManager.give_player.emit(body)
+		keep_going_timer.stop()
 		change_state.emit("Chase")
+		detect_area.queue_free()
 
 
 func _on_keep_going_timer_timeout() -> void:

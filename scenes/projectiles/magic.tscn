@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpa60ipyp1p7a"]
+
+[ext_resource type="Script" uid="uid://c5841ym1266mw" path="res://scripts/player/magic.gd" id="1_7r37a"]
+[ext_resource type="Texture2D" uid="uid://cqyh4tb0epsmk" path="res://assets/magic.png" id="1_j0p5k"]
+[ext_resource type="Script" uid="uid://f6mjuef5anvk" path="res://scripts/collisions/hit_box.gd" id="2_1wucm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wucm"]
+atlas = ExtResource("1_j0p5k")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1wucm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wucm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7r37a"]
+radius = 4.0
+
+[node name="Magic" type="CharacterBody2D"]
+z_index = 1
+collision_layer = 2
+collision_mask = 5
+motion_mode = 1
+slide_on_ceiling = false
+script = ExtResource("1_7r37a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1wucm")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_1wucm")
+metadata/_custom_type_script = "uid://f6mjuef5anvk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_7r37a")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_7r37a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7r37a")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
