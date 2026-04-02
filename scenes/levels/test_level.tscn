@@ -202,16 +202,6 @@ sources/0 = SubResource("TileSetAtlasSource_v45ci")
 [node name="Player" parent="." instance=ExtResource("1_jbqir")]
 position = Vector2(54, 11)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(2.4, 2.4)
-process_callback = 0
-limit_left = -224
-limit_top = -128
-limit_right = 256
-limit_bottom = 146
-position_smoothing_enabled = true
-editor_draw_limits = true
-
 [node name="FollowingEnemy" parent="." instance=ExtResource("2_yautc")]
 position = Vector2(-40, 7)
 

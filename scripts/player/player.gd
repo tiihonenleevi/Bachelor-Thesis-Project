@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 const SPEED: int = 120
 @export var hp: int = 4
@@ -6,6 +6,7 @@ const SPEED: int = 120
 var can_shoot: bool = true
 @onready var magic_scene: PackedScene = load("res://scenes/projectiles/magic.tscn")
 @onready var shoot_timer: Timer = $ShootTimer
+@onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	GameState.player = self
@@ -40,3 +41,8 @@ func take_damage(dmg_amount: int) -> void:
 
 	if hp <= 0:
 		print("dead")
+
+## Flips the player sprite if needed when entering door
+func orient(dir: Vector2) -> void:
+	if dir.x:
+		animations.flip_h = dir.x < 0

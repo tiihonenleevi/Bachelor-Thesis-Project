@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://c7n2yvanqknml" path="res://scripts/collisions/hurt_box.gd" id="7_d0hd8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_en65j"]
-radius = 24.5153
+radius = 18.404346
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwql0"]
 atlas = ExtResource("2_en65j")

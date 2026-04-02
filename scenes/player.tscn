@@ -26,7 +26,6 @@ animations = [{
 size = Vector2(10, 12)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-position = Vector2(1, 0)
 collision_layer = 2
 script = ExtResource("1_g2els")
 
@@ -54,5 +53,13 @@ metadata/_custom_type_script = "uid://c7n2yvanqknml"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-1, 1)
 shape = SubResource("RectangleShape2D_qlg0r")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.4, 2.4)
+limit_left = -244
+limit_top = -128
+limit_right = 256
+limit_bottom = 146
+editor_draw_limits = true
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
