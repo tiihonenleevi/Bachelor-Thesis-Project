@@ -215,7 +215,7 @@ separation = Vector2i(1, 1)
 
 [sub_resource type="TileSet" id="TileSet_7o1uh"]
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 6
+physics_layer_0/collision_mask = 30
 sources/0 = SubResource("TileSetAtlasSource_2l302")
 
 [node name="Room1" type="Node2D"]

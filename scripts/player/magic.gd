@@ -8,17 +8,14 @@ var distance_travelled: float = 0
 
 func _ready() -> void:
 	# Get the collision layer of the one that's shooting
+	# and use that to deduct the required collision properties
 	var parent_layer = get_parent().get_parent().collision_layer
 	collision_layer = parent_layer * 2
 	hit_box.collision_layer = parent_layer * 2
-	
 	if parent_layer == 2:
-		collision_mask = 8
+		collision_mask = 9
 	elif parent_layer == 8:
-		collision_mask = 2
-	
-	print(collision_layer, collision_mask)
-	print(hit_box.collision_layer)
+		collision_mask = 3
 
 func _physics_process(delta: float) -> void:
 	velocity = direction * SPEED

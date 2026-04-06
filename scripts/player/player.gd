@@ -1,5 +1,6 @@
 class_name Player extends CharacterBody2D
 
+@export var max_hp: int = 4
 @export var hp: int = 4
 
 var can_shoot: bool = true
