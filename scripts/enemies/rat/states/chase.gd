@@ -1,6 +1,6 @@
 extends State
 
-const SPEED: int = 80
+@export var speed: int = 80
 
 func enter() -> void:
 	# Calls the State's implementation of enter()
@@ -9,4 +9,4 @@ func enter() -> void:
 
 func physics_update(_delta: float) -> void:
 	var direction = parent.position.direction_to(GameState.player.position)
-	parent.velocity = direction * SPEED
+	parent.velocity = direction * speed

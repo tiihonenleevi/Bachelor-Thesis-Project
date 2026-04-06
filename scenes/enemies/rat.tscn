@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://bh2y1ijvkbc20"]
 
-[ext_resource type="Script" uid="uid://cd118fdk6fxn3" path="res://scripts/enemies/rat.gd" id="1_h52yg"]
+[ext_resource type="Script" uid="uid://cd118fdk6fxn3" path="res://scripts/enemies/rat/rat.gd" id="1_h52yg"]
 [ext_resource type="Texture2D" uid="uid://bl1n663tlpto0" path="res://assets/tilemap.png" id="2_en65j"]
 [ext_resource type="Script" uid="uid://ww714qnvrr8c" path="res://scripts/state_machine.gd" id="3_aejsi"]
-[ext_resource type="Script" uid="uid://dlvtkij5ndgoa" path="res://scripts/enemies/enemy_states/wander.gd" id="4_aejsi"]
-[ext_resource type="Script" uid="uid://v3mrip6avj60" path="res://scripts/enemies/enemy_states/chase.gd" id="5_en65j"]
+[ext_resource type="Script" uid="uid://dlvtkij5ndgoa" path="res://scripts/enemies/rat/states/wander.gd" id="4_aejsi"]
+[ext_resource type="Script" uid="uid://v3mrip6avj60" path="res://scripts/enemies/rat/states/chase.gd" id="5_en65j"]
 [ext_resource type="Script" uid="uid://f6mjuef5anvk" path="res://scripts/collisions/hit_box.gd" id="6_wwql0"]
 [ext_resource type="Script" uid="uid://c7n2yvanqknml" path="res://scripts/collisions/hurt_box.gd" id="7_d0hd8"]
 
@@ -27,14 +27,14 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ohayx"]
-radius = 2.4
+radius = 2.0000002
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d0hd8"]
-radius = 3.1999998
+radius = 2.3999999
 
 [node name="Rat" type="CharacterBody2D"]
 scale = Vector2(2.5, 2.5)
-collision_layer = 4
+collision_layer = 8
 script = ExtResource("1_h52yg")
 
 [node name="DetectArea" type="Area2D" parent="."]
@@ -70,10 +70,10 @@ wait_time = 2.0
 script = ExtResource("5_en65j")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(0, 29)
+target_position = Vector2(0, 7.9999995)
 
 [node name="HitBox" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 0
 script = ExtResource("6_wwql0")
 metadata/_custom_type_script = "uid://f6mjuef5anvk"
@@ -83,7 +83,7 @@ position = Vector2(0, -1.9999999)
 shape = SubResource("CircleShape2D_d0hd8")
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_mask = 2
+collision_mask = 6
 script = ExtResource("7_d0hd8")
 metadata/_custom_type_script = "uid://c7n2yvanqknml"
 

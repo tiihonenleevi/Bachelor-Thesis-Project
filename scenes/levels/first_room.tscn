@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://cwchuvam6v8he"]
+[gd_scene load_steps=7 format=4 uid="uid://cwchuvam6v8he"]
 
 [ext_resource type="Script" uid="uid://djsjm4vdkxx45" path="res://scripts/levels/level.gd" id="1_uhvtf"]
 [ext_resource type="Texture2D" uid="uid://bl1n663tlpto0" path="res://assets/tilemap.png" id="2_hpdjh"]
 [ext_resource type="PackedScene" uid="uid://cyhfir6g3cp54" path="res://scenes/levels/door.tscn" id="3_hpdjh"]
+[ext_resource type="PackedScene" uid="uid://rkcare71msn0" path="res://scenes/enemies/dark_wizard.tscn" id="4_uhvtf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hpdjh"]
 texture = ExtResource("2_hpdjh")
@@ -197,9 +198,8 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_hpdjh")
 
-[node name="FirstRoom" type="Node2D" node_paths=PackedStringArray("doors")]
+[node name="FirstRoom" type="Node2D"]
 script = ExtResource("1_uhvtf")
-doors = [NodePath("DoorUp"), NodePath("DoorLeft"), NodePath("DoorRight")]
 
 [node name="Environment" type="TileMapLayer" parent="."]
 z_index = -1
@@ -208,12 +208,18 @@ tile_set = SubResource("TileSet_1n1s7")
 
 [node name="DoorUp" parent="." instance=ExtResource("3_hpdjh")]
 position = Vector2(0, -103)
+monitoring = true
 
 [node name="DoorLeft" parent="." instance=ExtResource("3_hpdjh")]
 position = Vector2(-215, 0)
 rotation = 1.5707964
+monitoring = true
 
 [node name="DoorRight" parent="." instance=ExtResource("3_hpdjh")]
 position = Vector2(215, 0)
 rotation = 1.5707964
+monitoring = true
 new_scene_path = "res://scenes/levels/rooms/room_1.tscn"
+
+[node name="DarkWizard" parent="." instance=ExtResource("4_uhvtf")]
+position = Vector2(122, -40)

@@ -8,7 +8,7 @@ var entry_direction: String
 #var transition_type: String = "wipe_to_"
 
 ## How far into the room/level the player is pushed
-var push_distance: int = 5
+var push_distance: int = 20
 ## Scene that needs to be loaded when entering the specific door
 @export var new_scene_path: String
 ## The name of the door the player enters in the new scene
@@ -42,7 +42,7 @@ func _on_body_entered(body: Node2D) -> void:
 	
 	SceneManager.swap_scenes_zelda(new_scene_path, gameplay_node.level_holder, scene_to_unload, get_move_dir())
 	# Cleans up the door
-	queue_free()
+	#queue_free()
 
 ## Returns the starting location of the player based on the door's location and the
 ## entry_direction (the Vector towards the room/level)

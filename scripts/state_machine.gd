@@ -6,13 +6,12 @@ class_name StateMachine
 var states: Dictionary = {}
 
 ## Called when the node enters the scene tree
-func init(parent: CharacterBody2D, animations: AnimatedSprite2D) -> void:
+func init(parent: CharacterBody2D) -> void:
 	# Goes through all the children of the StateMachine
 	for child in get_children():
 		if child is State:
 			states[child.name] = child
 			child.parent = parent
-			child.animations = animations
 			
 			# Connects the StateMachine to the "change_state" signal
 			child.change_state.connect(on_state_changed)

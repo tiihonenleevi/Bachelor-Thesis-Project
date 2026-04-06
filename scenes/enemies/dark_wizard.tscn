@@ -1,0 +1,117 @@
+[gd_scene load_steps=16 format=3 uid="uid://rkcare71msn0"]
+
+[ext_resource type="Script" uid="uid://bxxyje4dgflck" path="res://scripts/enemies/dark_wizard/dark_wizard.gd" id="1_umjli"]
+[ext_resource type="Texture2D" uid="uid://bl1n663tlpto0" path="res://assets/tilemap.png" id="2_c4qsy"]
+[ext_resource type="Script" uid="uid://f6mjuef5anvk" path="res://scripts/collisions/hit_box.gd" id="3_4737y"]
+[ext_resource type="Script" uid="uid://c7n2yvanqknml" path="res://scripts/collisions/hurt_box.gd" id="4_im213"]
+[ext_resource type="Script" uid="uid://ww714qnvrr8c" path="res://scripts/state_machine.gd" id="5_w33ds"]
+[ext_resource type="Script" uid="uid://dd8esw6m4wwut" path="res://scripts/enemies/dark_wizard/states/wander.gd" id="6_di50i"]
+[ext_resource type="Script" uid="uid://1wcsne4x4mws" path="res://scripts/enemies/dark_wizard/states/shoot.gd" id="7_a2si4"]
+[ext_resource type="Script" uid="uid://cv3xrf4yt5jxu" path="res://scripts/enemies/dark_wizard/states/idle.gd" id="8_e46m6"]
+[ext_resource type="Script" uid="uid://rwy0s8klnbp6" path="res://scripts/enemies/dark_wizard/states/chase.gd" id="9_8f84r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uilvn"]
+atlas = ExtResource("2_c4qsy")
+region = Rect2(51, 153, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rg6m2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uilvn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwojg"]
+size = Vector2(12, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rg6m2"]
+size = Vector2(14, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mc8tn"]
+size = Vector2(16, 18)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0bra5"]
+radius = 73.0
+
+[node name="DarkWizard" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_umjli")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rg6m2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_vwojg")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_4737y")
+metadata/_custom_type_script = "uid://f6mjuef5anvk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+visible = false
+shape = SubResource("RectangleShape2D_rg6m2")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+script = ExtResource("4_im213")
+metadata/_custom_type_script = "uid://c7n2yvanqknml"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visible = false
+shape = SubResource("RectangleShape2D_mc8tn")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("5_w33ds")
+current_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://ww714qnvrr8c"
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("6_di50i")
+
+[node name="KeepGoingTimer" type="Timer" parent="StateMachine/Wander"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Shoot" type="Node" parent="StateMachine"]
+script = ExtResource("7_a2si4")
+
+[node name="CoolOffTimer" type="Timer" parent="StateMachine/Shoot"]
+wait_time = 1.5
+one_shot = true
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("8_e46m6")
+metadata/_custom_type_script = "uid://c72ubwda3kddu"
+
+[node name="IdleTimer" type="Timer" parent="StateMachine/Idle"]
+one_shot = true
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("9_8f84r")
+metadata/_custom_type_script = "uid://c72ubwda3kddu"
+
+[node name="ChaseTimer" type="Timer" parent="StateMachine/Chase"]
+one_shot = true
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_0bra5")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 30)
+
+[connection signal="timeout" from="StateMachine/Shoot/CoolOffTimer" to="StateMachine/Shoot" method="_on_cool_off_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Idle/IdleTimer" to="StateMachine/Idle" method="_on_idle_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Chase/ChaseTimer" to="StateMachine/Chase" method="_on_chase_timer_timeout"]
+[connection signal="body_entered" from="DetectArea" to="StateMachine/Wander" method="_on_detect_area_body_entered"]

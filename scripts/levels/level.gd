@@ -10,6 +10,12 @@ var data: LevelDataHandoff
 func _ready() -> void:
 	#player.disable()
 	player.visible = false
+	
+	# Auto-populate from children — always fresh, never stale
+	for child in get_children():
+		if child is Door:
+			doors.append(child)
+	
 	# This block allows to test current scene without needing the SceneManager to call these
 	if data == null:
 		init_scene()
@@ -61,6 +67,8 @@ func init_player_location() -> void:
 		player.orient(data.move_dir)
 		# Find the correct door from doors
 		for door in doors:
+			if not is_instance_valid(door):
+				continue
 			if door.name == data.entry_door_name:
 				player.global_position = door.get_player_entry_vector()
 
@@ -118,3 +126,4 @@ func replace_door_tiles() -> void:
 				alternative_2 = 6
 		tile_map.set_cell(tile_1_pos, 0, Vector2(11, 0), alternative_2)
 		tile_map.set_cell(tile_2_pos, 0, Vector2(10, 0), alternative_1)
+		door.monitoring = true

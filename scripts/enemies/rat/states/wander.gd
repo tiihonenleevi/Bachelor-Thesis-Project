@@ -9,7 +9,6 @@ const SPEED: int = 50
 var direction: String = DIRECTIONS.pick_random()
 
 func enter() -> void:
-	print("wander")
 	# Calls the State's implementation of enter()
 	# super()
 	keep_going_timer.start()

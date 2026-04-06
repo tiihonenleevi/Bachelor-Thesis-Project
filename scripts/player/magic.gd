@@ -4,6 +4,21 @@ var direction: Vector2
 const SPEED: int = 200
 var max_range: float = 130
 var distance_travelled: float = 0
+@onready var hit_box: HitBox = $HitBox
+
+func _ready() -> void:
+	# Get the collision layer of the one that's shooting
+	var parent_layer = get_parent().get_parent().collision_layer
+	collision_layer = parent_layer * 2
+	hit_box.collision_layer = parent_layer * 2
+	
+	if parent_layer == 2:
+		collision_mask = 8
+	elif parent_layer == 8:
+		collision_mask = 2
+	
+	print(collision_layer, collision_mask)
+	print(hit_box.collision_layer)
 
 func _physics_process(delta: float) -> void:
 	velocity = direction * SPEED
@@ -15,8 +30,3 @@ func _physics_process(delta: float) -> void:
 		# delete magic
 		queue_free()
 	move_and_slide()
-
-
-#func _on_area_2d_area_entered(_area: Area2D) -> void:
-	#print("hit")
-	#queue_free()

@@ -218,9 +218,8 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
 sources/0 = SubResource("TileSetAtlasSource_2l302")
 
-[node name="Room1" type="Node2D" node_paths=PackedStringArray("doors")]
+[node name="Room1" type="Node2D"]
 script = ExtResource("1_n3aj2")
-doors = [NodePath("DoorUp"), NodePath("DoorRight"), NodePath("DoorDown"), NodePath("DoorLeft")]
 
 [node name="Environment" type="TileMapLayer" parent="."]
 z_index = -1
@@ -243,19 +242,15 @@ position = Vector2(25.000004, 20)
 
 [node name="DoorUp" parent="." instance=ExtResource("3_m2kj1")]
 position = Vector2(0, -103)
-monitoring = false
 
 [node name="DoorRight" parent="." instance=ExtResource("3_m2kj1")]
 position = Vector2(199, 0)
 rotation = 1.5707964
-monitoring = false
 
 [node name="DoorDown" parent="." instance=ExtResource("3_m2kj1")]
 position = Vector2(0, 103)
-monitoring = false
 
 [node name="DoorLeft" parent="." instance=ExtResource("3_m2kj1")]
 position = Vector2(-199, 0)
 rotation = 1.5707964
-monitoring = false
 new_scene_path = "res://scenes/levels/first_room.tscn"

@@ -4,12 +4,11 @@ class_name State
 signal change_state(new_state: StringName)
 
 var parent: CharacterBody2D
-var animations: AnimatedSprite2D
 
 ## Call when entering the state
 func enter() -> void:
-	# Play the proper animation for the current state
-	animations.play(self.name.to_snake_case())
+	# If there were any animations they would be played from here
+	pass
 
 ## Call when exiting state. Handy for clean ups
 func exit() -> void:

@@ -1,11 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://cn2n7vovejfuh"]
+[gd_scene load_steps=11 format=3 uid="uid://cn2n7vovejfuh"]
 
 [ext_resource type="Script" uid="uid://b3gbpbc64g3d5" path="res://scripts/player/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://bl1n663tlpto0" path="res://assets/tilemap.png" id="2_g2els"]
 [ext_resource type="Script" uid="uid://c7n2yvanqknml" path="res://scripts/collisions/hurt_box.gd" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://ww714qnvrr8c" path="res://scripts/state_machine.gd" id="4_qlg0r"]
+[ext_resource type="Script" uid="uid://dl04dm84uckv" path="res://scripts/player/states/shoot.gd" id="6_smehm"]
+[ext_resource type="Script" uid="uid://bfimbv4c8kl60" path="res://scripts/player/states/move.gd" id="7_ur7pv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
-size = Vector2(121.26313, 121.26316)
+size = Vector2(80.842094, 87.57895)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("2_g2els")
@@ -23,15 +26,15 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlg0r"]
-size = Vector2(10, 12)
+size = Vector2(14, 15)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_g2els")
+hp = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(-0.9999999, 2.9802322e-08)
+position = Vector2(-0.9999999, 0.5000001)
 scale = Vector2(0.14843753, 0.1484375)
 shape = SubResource("RectangleShape2D_g2els")
 
@@ -46,20 +49,33 @@ one_shot = true
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 24
 script = ExtResource("4_dqkch")
 metadata/_custom_type_script = "uid://c7n2yvanqknml"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(-1, 1)
+position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_qlg0r")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.4, 2.4)
-limit_left = -244
+limit_left = -240
 limit_top = -128
-limit_right = 256
-limit_bottom = 146
+limit_right = 240
+limit_bottom = 140
 editor_draw_limits = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("4_qlg0r")
+current_state = NodePath("Move")
+metadata/_custom_type_script = "uid://ww714qnvrr8c"
+
+[node name="Shoot" type="Node" parent="StateMachine"]
+script = ExtResource("6_smehm")
+metadata/_custom_type_script = "uid://c72ubwda3kddu"
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("7_ur7pv")
+metadata/_custom_type_script = "uid://c72ubwda3kddu"
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
