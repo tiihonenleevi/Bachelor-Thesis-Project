@@ -102,8 +102,7 @@ func swap_scenes(scene_to_load: String, load_into: Node = null, scene_to_unload:
 ## [b][color=plum]load_into[/color][/b] - Node you'd like to load the resource into
 ## [b][color=plum]scene_to_unload[/color][/b] - Scene that needs to be unloaded. Doesn't support null
 ## [b][color=plum]move_dir[/color][/b] - the direction the player is moving towards
-func swap_scenes_zelda(scene_to_load: String, load_into: Node, scene_to_unload: Node,
-					   move_dir: Vector2) -> void:
+func swap_scenes_zelda(scene_to_load: String, load_into: Node, scene_to_unload: Node,   move_dir: Vector2) -> void:
 	# If loading already in progress push warning and do nothing
 	if _loading_in_progress:
 		push_warning("SceneManager is already loading something")
@@ -126,8 +125,10 @@ func _load_content(content_path: String) -> void:
 		await _loading_screen.transition_complete
 	
 	_content_path = content_path
+	print(_content_path)
 	var loader = ResourceLoader.load_threaded_request(content_path)
 	if not ResourceLoader.exists(content_path) or loader == null:
+		print("problem here 1")
 		_content_invalid.emit(content_path)
 		return
 	
@@ -160,7 +161,7 @@ func _monitor_load_status() -> void:
 			_load_progress_timer.queue_free()
 			_content_finished_loading.emit(ResourceLoader.
 								load_threaded_get(_content_path).instantiate())
-			return # Isn't really necessary but doesnt't hurt either
+			return # Isn't really necessary but doesn't hurt either
 
 ## Fires when attempting to load invalid content
 func _on_content_invalid(path: String) -> void:
@@ -183,9 +184,6 @@ func _on_content_finished_loading(new_scene) -> void:
 		if previous_scene.has_method("get_data") and new_scene.has_method("receive_data"):
 			new_scene.receive_data(previous_scene.get_data())
 	
-	# Load the new_scene into designated node
-	_load_scene_into.add_child(new_scene)
-	
 	# Listen for this if you want to perform tasks on the scene immediately after adding it to the tree
 	scene_added.emit(new_scene, _loading_screen)
 	
@@ -193,33 +191,36 @@ func _on_content_finished_loading(new_scene) -> void:
 	if _transition == "zelda":
 		# Slide new level in
 		var viewport_size: Vector2 = get_tree().root.get_viewport().get_visible_rect().size
-		new_scene.position = _zelda_transition_direction * viewport_size
+		new_scene.global_position = _zelda_transition_direction * viewport_size
+		print(new_scene.global_position)
 		var tween_in: Tween = get_tree().create_tween()
-		tween_in.tween_property(new_scene, "position", Vector2.ZERO, 1).set_trans(Tween.TRANS_SINE)
+		tween_in.tween_property(new_scene, "global_position", Vector2.ZERO, 1).set_trans(Tween.TRANS_SINE)
 		
 		# Slide previous scene out
 		var tween_out:Tween = get_tree().create_tween()
 		var vector_off_screen:Vector2 = Vector2.ZERO
 		vector_off_screen = -_zelda_transition_direction * viewport_size
-		tween_out.tween_property(previous_scene, "position", vector_off_screen, 1).set_trans(Tween.TRANS_SINE)
+		tween_out.tween_property(previous_scene, "global_position", vector_off_screen, 1).set_trans(Tween.TRANS_SINE)
+		
+		# Load the new_scene into designated node
+		_load_scene_into.add_child(new_scene)
 		
 		# once the tweens are done, do some cleanup
 		await tween_in.finished
-	
-	# Remove the previous scene
-	if _scene_to_unload != null and _scene_to_unload != get_tree().root:
-		_scene_to_unload.queue_free()
 	
 	# Called right after scene is added to the tree
 	if new_scene.has_method("init_scene"):
 		new_scene.init_scene()
 	
-	# probably not necssary since we split our _content_finished_loading but it won't hurt to have an extra check
 	if _loading_screen != null:
 		_loading_screen.finish_transition()
 		
-		# Wait or loading animation to finish
+		# Wait for loading animation to finish
 		await _loading_screen.anim_player.animation_finished
+	
+	# Remove the previous scene
+	if _scene_to_unload != null and _scene_to_unload != get_tree().root:
+		_scene_to_unload.queue_free()
 	
 	# If the new scene implements start_scene() call it here
 	if new_scene.has_method("start_scene"):

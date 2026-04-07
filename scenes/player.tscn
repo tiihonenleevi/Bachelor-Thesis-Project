@@ -57,11 +57,11 @@ position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_qlg0r")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2.4, 2.4)
-limit_left = -240
-limit_top = -128
-limit_right = 240
-limit_bottom = 140
+zoom = Vector2(2.6, 2.6)
+limit_left = -220
+limit_top = -124
+limit_right = 220
+limit_bottom = 126
 editor_draw_limits = true
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]

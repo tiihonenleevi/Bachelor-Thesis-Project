@@ -8,10 +8,10 @@ var data: LevelDataHandoff
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#player.disable()
+	player.disable()
 	player.visible = false
 	
-	# Auto-populate from children — always fresh, never stale
+	# Auto-populate doors from children — always fresh, never stale
 	for child in get_children():
 		if child is Door:
 			doors.append(child)
@@ -57,7 +57,7 @@ func init_scene() -> void:
 ## Emitted at the very end of SceneManager.on_content_finished_loading, after the transition has
 ## completed.
 func start_scene() -> void:
-	#player.enable()
+	player.enable()
 	_connect_to_doors()
 
 ## Puts player in front of the correct door, facing the correct direction
@@ -78,11 +78,12 @@ func init_player_location() -> void:
 ## [b][color=plum]door[/color][/b] - Variable for the door that player can use
 func _on_player_entered_door(door: Door) -> void:
 	_disconnect_from_doors()
-	#player.disable()
+	player.disable()
 	data = LevelDataHandoff.new()
 	data.entry_door_name = door.entry_door_name
 	data.move_dir = door.get_move_dir()
 	set_process(false)
+	set_physics_process(false)
 
 ## Connects to all door signals in level
 func _connect_to_doors() -> void:

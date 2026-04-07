@@ -38,7 +38,6 @@ func _on_body_entered(body: Node2D) -> void:
 	var gameplay_node: Gameplay = get_tree().get_first_node_in_group("Gameplay") as Gameplay
 	# Variable for the scene the door is in
 	var scene_to_unload: Node = gameplay_node.current_level
-	print(scene_to_unload)
 	
 	SceneManager.swap_scenes_zelda(new_scene_path, gameplay_node.level_holder, scene_to_unload, get_move_dir())
 	# Cleans up the door
@@ -49,7 +48,6 @@ func _on_body_entered(body: Node2D) -> void:
 func get_player_entry_vector() -> Vector2:
 	var vector: Vector2 = Vector2.RIGHT
 	# Check the entry direction
-	print(entry_direction)
 	match entry_direction:
 		"left":
 			vector = Vector2.LEFT
@@ -59,7 +57,6 @@ func get_player_entry_vector() -> Vector2:
 			vector = Vector2.UP
 		"down":
 			vector = Vector2.DOWN
-	print(vector)
 	# Return Vector2 according to entry direction
 	return global_position + (-vector * push_distance)
 

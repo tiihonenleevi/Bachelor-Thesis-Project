@@ -218,4 +218,4 @@ monitoring = true
 position = Vector2(199, 0)
 rotation = 1.5707964
 monitoring = true
-new_scene_path = "res://scenes/levels/rooms/room_1.tscn"
+new_scene_path = "res://scenes/levels/rooms/room_with_door_all.tscn"

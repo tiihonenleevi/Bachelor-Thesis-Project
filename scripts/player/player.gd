@@ -6,6 +6,9 @@ class_name Player extends CharacterBody2D
 var can_shoot: bool = true
 var shoot_direction: Vector2
 @onready var shoot_timer: Timer = $ShootTimer
+
+var can_move: bool = true
+
 @onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
 
@@ -29,3 +32,9 @@ func take_damage(dmg_amount: int) -> void:
 func orient(dir: Vector2) -> void:
 	if dir.x:
 		animations.flip_h = dir.x < 0
+
+func disable() -> void:
+	can_move = false
+
+func enable() -> void:
+	can_move = true

@@ -11,7 +11,6 @@ func _physics_process(_delta: float) -> void:
 
 func take_damage(amount: float) -> void:
 	hp -= amount
-	print(hp)
 	# check if the enemy needs to die
 	if hp <= 0:
 		queue_free()

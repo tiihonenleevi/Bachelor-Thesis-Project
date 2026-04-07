@@ -1,12 +1,12 @@
 [gd_scene load_steps=7 format=4 uid="uid://bfio66gmhupae"]
 
-[ext_resource type="Texture2D" uid="uid://bl1n663tlpto0" path="res://assets/tilemap.png" id="1_2l302"]
-[ext_resource type="Script" uid="uid://djsjm4vdkxx45" path="res://scripts/levels/level.gd" id="1_n3aj2"]
-[ext_resource type="PackedScene" uid="uid://bh2y1ijvkbc20" path="res://scenes/enemies/rat.tscn" id="2_7o1uh"]
-[ext_resource type="PackedScene" uid="uid://cyhfir6g3cp54" path="res://scenes/levels/door.tscn" id="3_m2kj1"]
+[ext_resource type="Script" uid="uid://djsjm4vdkxx45" path="res://scripts/levels/level.gd" id="1_olhp6"]
+[ext_resource type="Texture2D" uid="uid://bl1n663tlpto0" path="res://assets/tilemap.png" id="2_ox7j8"]
+[ext_resource type="PackedScene" uid="uid://bh2y1ijvkbc20" path="res://scenes/enemies/rat.tscn" id="3_31fse"]
+[ext_resource type="PackedScene" uid="uid://cyhfir6g3cp54" path="res://scenes/levels/door.tscn" id="4_2u5cn"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2l302"]
-texture = ExtResource("1_2l302")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n3aj2"]
+texture = ExtResource("2_ox7j8")
 separation = Vector2i(1, 1)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -216,10 +216,10 @@ separation = Vector2i(1, 1)
 [sub_resource type="TileSet" id="TileSet_7o1uh"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 30
-sources/0 = SubResource("TileSetAtlasSource_2l302")
+sources/0 = SubResource("TileSetAtlasSource_n3aj2")
 
-[node name="Room1" type="Node2D"]
-script = ExtResource("1_n3aj2")
+[node name="RoomWithDoorAll" type="Node2D"]
+script = ExtResource("1_olhp6")
 
 [node name="Environment" type="TileMapLayer" parent="."]
 z_index = -1
@@ -228,29 +228,29 @@ tile_set = SubResource("TileSet_7o1uh")
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="Rat" parent="Enemies" instance=ExtResource("2_7o1uh")]
+[node name="Rat" parent="Enemies" instance=ExtResource("3_31fse")]
 position = Vector2(24.000004, -12.000006)
 
-[node name="Rat2" parent="Enemies" instance=ExtResource("2_7o1uh")]
+[node name="Rat2" parent="Enemies" instance=ExtResource("3_31fse")]
 position = Vector2(-28.000004, -12.000001)
 
-[node name="Rat3" parent="Enemies" instance=ExtResource("2_7o1uh")]
+[node name="Rat3" parent="Enemies" instance=ExtResource("3_31fse")]
 position = Vector2(-29.000002, 19)
 
-[node name="Rat4" parent="Enemies" instance=ExtResource("2_7o1uh")]
+[node name="Rat4" parent="Enemies" instance=ExtResource("3_31fse")]
 position = Vector2(25.000004, 20)
 
-[node name="DoorUp" parent="." instance=ExtResource("3_m2kj1")]
+[node name="DoorUp" parent="." instance=ExtResource("4_2u5cn")]
 position = Vector2(0, -103)
 
-[node name="DoorRight" parent="." instance=ExtResource("3_m2kj1")]
+[node name="DoorRight" parent="." instance=ExtResource("4_2u5cn")]
 position = Vector2(199, 0)
 rotation = 1.5707964
 
-[node name="DoorDown" parent="." instance=ExtResource("3_m2kj1")]
+[node name="DoorDown" parent="." instance=ExtResource("4_2u5cn")]
 position = Vector2(0, 103)
 
-[node name="DoorLeft" parent="." instance=ExtResource("3_m2kj1")]
+[node name="DoorLeft" parent="." instance=ExtResource("4_2u5cn")]
 position = Vector2(-199, 0)
 rotation = 1.5707964
 new_scene_path = "res://scenes/levels/first_room.tscn"
