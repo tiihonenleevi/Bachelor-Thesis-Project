@@ -15,22 +15,23 @@ func enter() -> void:
 	keep_going_timer.start()
 
 func physics_update(_delta: float) -> void:
-	if ray_cast.is_colliding():
-		direction = DIRECTIONS.pick_random()
-	
-	match direction:
-		"LEFT":
-			ray_cast.target_position = Vector2(-29, 0)
-			parent.velocity.x = -SPEED
-		"RIGHT":
-			ray_cast.target_position = Vector2(29, 0)
-			parent.velocity.x = SPEED
-		"UP":
-			ray_cast.target_position = Vector2(0, -29)
-			parent.velocity.y = -SPEED
-		"DOWN":
-			ray_cast.target_position = Vector2(0, 29)
-			parent.velocity.y = SPEED
+	if ray_cast != null:
+		if ray_cast.is_colliding():
+			direction = DIRECTIONS.pick_random()
+		
+		match direction:
+			"LEFT":
+				ray_cast.target_position = Vector2(-29, 0)
+				parent.velocity.x = -SPEED
+			"RIGHT":
+				ray_cast.target_position = Vector2(29, 0)
+				parent.velocity.x = SPEED
+			"UP":
+				ray_cast.target_position = Vector2(0, -29)
+				parent.velocity.y = -SPEED
+			"DOWN":
+				ray_cast.target_position = Vector2(0, 29)
+				parent.velocity.y = SPEED
 
 func _on_detect_area_body_entered(body: Node2D) -> void:
 	# Check if player is on site
@@ -39,7 +40,6 @@ func _on_detect_area_body_entered(body: Node2D) -> void:
 		change_state.emit("Shoot")
 		detect_area.queue_free()
 		ray_cast.queue_free()
-
 
 func _on_keep_going_timer_timeout() -> void:
 	parent.velocity = Vector2(0, 0)

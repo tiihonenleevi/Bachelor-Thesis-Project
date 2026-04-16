@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameState="*res://scripts/singletons/game_state.gd"
 SceneManager="*res://scripts/singletons/scene_manager.gd"
 SignalBus="*res://scripts/singletons/signal_bus.gd"
+LevelGenerator="*res://scripts/singletons/level_generator.gd"
 
 [debug]
 
@@ -95,6 +96,7 @@ change_doors={
 2d_physics/layer_3="PlayerProjectiles"
 2d_physics/layer_4="Enemies"
 2d_physics/layer_5="EnemyProjectiles"
+2d_physics/layer_6="Items"
 
 [rendering]
 

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dujrr7ajyx62y"]
+
+[ext_resource type="Script" uid="uid://bu0f5cdd3il6k" path="res://scripts/items/hp_pickup.gd" id="1_eqkfr"]
+[ext_resource type="Texture2D" uid="uid://buj21kwa7myuw" path="res://assets/placeholder_heart.png" id="1_wym4l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqkfr"]
+size = Vector2(6, 6)
+
+[node name="HPPickup" type="Area2D"]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_eqkfr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_wym4l")
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_eqkfr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

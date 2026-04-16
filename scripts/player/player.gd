@@ -24,9 +24,21 @@ func _on_shoot_timer_timeout() -> void:
 
 func take_damage(dmg_amount: int) -> void:
 	hp -= dmg_amount
-
+	
+	# Send signal to let hp UI know that it needs to update
+	SignalBus.hp_changed.emit(hp)
+	
 	if hp <= 0:
+		hp = 0
 		print("dead")
+
+func gain_hp(amount: int) -> void:
+	if hp == max_hp:
+		return
+	else:
+		hp += amount
+		# Send signal to let hp UI know that it needs to update
+		SignalBus.hp_changed.emit(hp)
 
 ## Flips the player sprite if needed when entering door
 func orient(dir: Vector2) -> void:

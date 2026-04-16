@@ -125,10 +125,8 @@ func _load_content(content_path: String) -> void:
 		await _loading_screen.transition_complete
 	
 	_content_path = content_path
-	print(_content_path)
 	var loader = ResourceLoader.load_threaded_request(content_path)
 	if not ResourceLoader.exists(content_path) or loader == null:
-		print("problem here 1")
 		_content_invalid.emit(content_path)
 		return
 	
@@ -192,7 +190,6 @@ func _on_content_finished_loading(new_scene) -> void:
 		# Slide new level in
 		var viewport_size: Vector2 = get_tree().root.get_viewport().get_visible_rect().size
 		new_scene.global_position = _zelda_transition_direction * viewport_size
-		print(new_scene.global_position)
 		var tween_in: Tween = get_tree().create_tween()
 		tween_in.tween_property(new_scene, "global_position", Vector2.ZERO, 1).set_trans(Tween.TRANS_SINE)
 		
