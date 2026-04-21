@@ -11,6 +11,8 @@ var can_move: bool = true
 
 @onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var state_machine: StateMachine = $StateMachine
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var hurt_box_shape: CollisionShape2D = $HurtBox/CollisionShape2D
 
 func _ready() -> void:
 	GameState.player = self
@@ -30,6 +32,7 @@ func take_damage(dmg_amount: int) -> void:
 	
 	if hp <= 0:
 		hp = 0
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/dead_screen.tscn")
 		print("dead")
 
 func gain_hp(amount: int) -> void:
@@ -47,6 +50,10 @@ func orient(dir: Vector2) -> void:
 
 func disable() -> void:
 	can_move = false
+	collision_shape.set_deferred("disabled", true)
+	hurt_box_shape.set_deferred("disabled", true)
 
 func enable() -> void:
 	can_move = true
+	collision_shape.set_deferred("disabled", false)
+	hurt_box_shape.set_deferred("disabled", false)
