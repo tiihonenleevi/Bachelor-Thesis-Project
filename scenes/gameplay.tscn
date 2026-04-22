@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://rc3cinfiqs73"]
+[gd_scene load_steps=6 format=3 uid="uid://rc3cinfiqs73"]
 
 [ext_resource type="Script" uid="uid://cty5p6ihbidj2" path="res://scripts/gameplay.gd" id="1_7biu0"]
 [ext_resource type="PackedScene" uid="uid://cn2n7vovejfuh" path="res://scenes/player.tscn" id="2_00tan"]
 [ext_resource type="PackedScene" uid="uid://cwchuvam6v8he" path="res://scenes/levels/first_room.tscn" id="3_l1v76"]
 [ext_resource type="PackedScene" uid="uid://p4ve50vg8wol" path="res://scenes/ui/heart_container.tscn" id="4_ct7aa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ct7aa"]
+font_size = 13
 
 [node name="Gameplay" type="Node2D" groups=["Gameplay"]]
 script = ExtResource("1_7biu0")
@@ -18,5 +21,32 @@ position = Vector2(0, 50)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HeartContainer" parent="CanvasLayer" instance=ExtResource("4_ct7aa")]
+
+[node name="MoveLabel" type="Label" parent="CanvasLayer"]
+texture_filter = 2
+anchors_preset = -1
+anchor_left = 0.24900001
+anchor_top = 0.23400001
+anchor_right = 0.33400002
+anchor_bottom = 0.38700002
+offset_left = -63.848022
+offset_top = 31.367996
+offset_right = -31.768036
+offset_bottom = -24.776016
+text = "Move:
+WASD"
+label_settings = SubResource("LabelSettings_ct7aa")
+horizontal_alignment = 1
+
+[node name="ShootLabel" type="Label" parent="CanvasLayer"]
+texture_filter = 2
+offset_left = 832.0
+offset_top = 194.0
+offset_right = 902.0
+offset_bottom = 233.0
+text = "Shoot:
+Arrow keys"
+label_settings = SubResource("LabelSettings_ct7aa")
+horizontal_alignment = 1
 
 [editable path="Player"]

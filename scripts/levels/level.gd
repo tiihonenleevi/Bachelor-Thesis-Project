@@ -57,6 +57,12 @@ func receive_data(received_data) -> void:
 ## Sets up player position, configures doors from the generated map and spawns enemies.
 func init_scene() -> void:
 	my_grid_pos = data.grid_pos if data != null else Vector2i.ZERO
+	
+	var is_starting_room: bool = my_grid_pos == Vector2i.ZERO
+	if is_starting_room:
+		$"../../CanvasLayer/MoveLabel".show()
+		$"../../CanvasLayer/ShootLabel".show()
+	
 	init_player_location()
 	_spawn_enemies()
 	_configure_doors_from_generator()
@@ -199,6 +205,11 @@ func _get_door_pos_and_alt(door: Door) -> Array:
 # ── Door signals ──────────────────────────────────────────────────────────────
 
 func _on_player_entered_door(door: Door) -> void:
+	var is_starting_room: bool = my_grid_pos == Vector2i.ZERO
+	if is_starting_room:
+		$"../../CanvasLayer/MoveLabel".hide()
+		$"../../CanvasLayer/ShootLabel".hide()
+	
 	_disconnect_from_doors()
 	player.disable()
 	

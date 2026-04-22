@@ -106,6 +106,7 @@ func generate() -> void:
 			continue
 		
 		# Pick a random room scene and entry door facing in_dir
+		# This will have an effect only on bigger room sizes
 		var chosen: PackedScene = room_scenes[randi() % room_scenes.size()]
 		var chosen_path: String = chosen.resource_path
 		var chosen_fp: Vector2i = _footprint_cache[chosen_path]
