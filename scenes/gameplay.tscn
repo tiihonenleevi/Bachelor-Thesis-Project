@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://p4ve50vg8wol" path="res://scenes/ui/heart_container.tscn" id="4_ct7aa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ct7aa"]
-font_size = 13
+font_size = 17
 
 [node name="Gameplay" type="Node2D" groups=["Gameplay"]]
 script = ExtResource("1_7biu0")
